@@ -291,15 +291,3 @@ Benchmarking Duration: 1m0s
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
-
-## Contributing
-
-Contributions are welcome! Feel free to open issues or pull requests in the repository.
-
----
-
-**Note**: Make sure to update the `LICENSE` file with the appropriate license for your project.
-
----
-
-If you have any further questions or need additional assistance, please let me know!
