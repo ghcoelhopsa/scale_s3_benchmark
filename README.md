@@ -1,7 +1,3 @@
-Certainly! Here's the improved description of the configuration parameters in the `config.json` file, along with an example of how the folder structure looks after running the program. The entire content is in English.
-
----
-
 # IBM Scale S3 Benchmark
 
 This project implements a system to generate, replicate, and upload files to an S3 bucket, as well as perform benchmarking operations like GET, HEAD (STAT), and DELETE, similar to MinIO's Warp tool. The goal is to assess the performance of an S3 server under load.
