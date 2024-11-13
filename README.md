@@ -1,183 +1,4 @@
-# Sistema de Benchmark para Operações S3
-
-Este projeto implementa um sistema para gerar, replicar e fazer upload de arquivos para um bucket S3, além de realizar operações de benchmark como GET, HEAD (STAT) e DELETE, similar à ferramenta Warp do MinIO. O objetivo é avaliar o desempenho de um servidor S3 sob carga.
-
-## Sumário
-
-- [Descrição](#descrição)
-- [Características](#características)
-- [Pré-requisitos](#pré-requisitos)
-- [Instalação](#instalação)
-- [Configuração](#configuração)
-- [Uso](#uso)
-- [Exemplo de Saída](#exemplo-de-saída)
-- [Licença](#licença)
-- [Contribuições](#contribuições)
-
-## Descrição
-
-O programa realiza as seguintes etapas:
-
-1. **Geração de Arquivos Base**: Cria um conjunto de arquivos base com conteúdo aleatório, se ainda não existirem.
-2. **Replicação de Arquivos**: Replica os arquivos base usando o `reflink` para economizar espaço e tempo.
-3. **Upload para S3**: Faz upload dos arquivos replicados para um bucket S3 em paralelo.
-4. **Benchmarking**: Executa operações GET, HEAD (STAT) e DELETE nos arquivos armazenados no S3 por um período definido.
-5. **Relatório Final**: Gera um relatório detalhado com métricas de desempenho das operações realizadas.
-
-## Características
-
-- **Alta Concurrência**: Configuração de nível de concorrência para uploads e operações de benchmark.
-- **Operações Paralelas**: Utiliza goroutines e canais para realizar operações em paralelo.
-- **Métricas de Desempenho**: Coleta e reporta tempo mínimo, máximo e médio para cada tipo de operação.
-- **Configuração Flexível**: Personalize o comportamento do programa através de um arquivo `config.json`.
-- **Compatibilidade**: Funciona com qualquer servidor compatível com a API S3.
-
-## Pré-requisitos
-
-- **Go**: Versão 1.16 ou superior instalada.
-- **AWS SDK para Go**: Pode ser instalado via `go get`.
-- **Credenciais AWS**: Chave de acesso e segredo com permissões para operações S3.
-- **Sistema de Arquivos com Suporte a Reflink**: Como Btrfs ou XFS (opcional, mas recomendado).
-
-## Instalação
-
-1. **Clone o Repositório**
-
-   ```bash
-   git clone https://github.com/seu-usuario/seu-repositorio.git
-   cd seu-repositorio
-   ```
-
-2. **Instale as Dependências**
-
-   ```bash
-   go get github.com/aws/aws-sdk-go
-   ```
-
-3. **Compile o Programa**
-
-   ```bash
-   go build -o s3-benchmark
-   ```
-
-## Configuração
-
-Crie um arquivo `config.json` na raiz do projeto com o seguinte formato:
-
-```json
-{
-    "bucketName": "nome-do-seu-bucket",
-    "s3Folder": "pasta-base-no-s3",
-    "accessKey": "sua-chave-de-acesso",
-    "secretKey": "seu-segredo",
-    "baseDirectory": "./base_files",
-    "minSize": 1024,
-    "maxSize": 2048,
-    "maxFilesPerFolder": 1000,
-    "baseFileCount": 10,
-    "totalFiles": 100,
-    "maxConcurrentUploads": 10,
-    "maxIdleConns": 100,
-    "maxIdleConnsPerHost": 100,
-    "httpTimeout": 30,
-    "maxRetries": 3,
-    "endpointURLs": ["https://sua-url-s3"],
-    "maxConcurrentReplicas": 5,
-    "pauseDurationSeconds": 60,
-    "maxLocalFiles": 100,
-    "maxBenchmarkThreads": 10,
-    "benchmarkDurationSeconds": 60
-}
-```
-
-**Descrição dos Campos Principais:**
-
-- `bucketName`: Nome do bucket S3 onde os arquivos serão armazenados.
-- `s3Folder`: Pasta base dentro do bucket S3.
-- `accessKey` e `secretKey`: Credenciais AWS para acesso ao S3.
-- `baseDirectory`: Diretório local onde os arquivos base serão gerados.
-- `minSize` e `maxSize`: Tamanho mínimo e máximo dos arquivos gerados (em bytes).
-- `totalFiles`: Número total de arquivos a serem replicados e enviados.
-- `maxConcurrentUploads`: Número máximo de uploads simultâneos.
-- `endpointURLs`: Lista de URLs dos endpoints S3.
-- `benchmarkDurationSeconds`: Duração (em segundos) das operações de benchmark.
-
-## Uso
-
-1. **Prepare o Arquivo de Configuração**
-
-   Edite o arquivo `config.json` com os parâmetros desejados.
-
-2. **Execute o Programa**
-
-   ```bash
-   ./s3-benchmark
-   ```
-
-3. **Acompanhe a Saída**
-
-   O programa exibirá informações sobre o progresso das operações, incluindo geração de arquivos, upload e benchmarking.
-
-## Exemplo de Saída
-
-```
-Starting pprof server on port 6060
-100% completed - 10 base files generated.
-Starting file replication with reflink in parallel.
-Replicating files: 100/100 (100.00%) | Rate: 5000.00 files/sec
-File replication completed.
-Replication of 100 files completed.
-
-Uploading to S3: 100/100 (100.00%) | Rate: 2000.00 files/sec
-Upload completed for subfolder index 0.
-Pausing for 60 seconds before next upload...
-
-All uploads completed.
-Performing benchmarking operations...
-
-GET and STAT operations completed. Starting DELETE operations...
-
-Benchmarking Report:
-====================
-
-Operation: GET
-Total Operations: 5000
-Successes: 5000
-Errors: 0
-Min Time: 5ms
-Max Time: 50ms
-Avg Time: 25ms
-
-Operation: STAT
-Total Operations: 5000
-Successes: 5000
-Errors: 0
-Min Time: 3ms
-Max Time: 40ms
-Avg Time: 20ms
-
-Operation: DELETE
-Total Operations: 100
-Successes: 100
-Errors: 0
-Min Time: 10ms
-Max Time: 30ms
-Avg Time: 15ms
-
-Overall Benchmark Summary:
-Total Operations: 10100
-Total Errors: 0
-Benchmarking Duration: 1m0s
-====================
-```
-
-## Licença
-
-Este projeto está licenciado sob a [MIT License](LICENSE).
-
-## Contribuições
-
-Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou pull requests no repositório.
+Certainly! Here's the improved description of the configuration parameters in the `config.json` file, along with an example of how the folder structure looks after running the program. The entire content is in English.
 
 ---
 
@@ -192,6 +13,8 @@ This project implements a system to generate, replicate, and upload files to an 
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [Configuration](#configuration)
+  - [Detailed Configuration Parameters](#detailed-configuration-parameters)
+  - [Example Folder Structure](#example-folder-structure)
 - [Usage](#usage)
 - [Sample Output](#sample-output)
 - [License](#license)
@@ -227,8 +50,8 @@ The program performs the following steps:
 1. **Clone the Repository**
 
    ```bash
-   git clone https://github.com/your-username/your-repository.git
-   cd your-repository
+   git clone https://github.com/ghcoelhopsa/scale_s3_benchmark
+   cd scale_s3_benchmark
    ```
 
 2. **Install Dependencies**
@@ -240,7 +63,7 @@ The program performs the following steps:
 3. **Build the Program**
 
    ```bash
-   go build -o s3-benchmark
+   go build
    ```
 
 ## Configuration
@@ -273,17 +96,128 @@ Create a `config.json` file in the project's root directory with the following f
 }
 ```
 
-**Key Field Descriptions:**
+### Detailed Configuration Parameters
 
-- `bucketName`: Name of the S3 bucket where files will be stored.
-- `s3Folder`: Base folder within the S3 bucket.
-- `accessKey` and `secretKey`: AWS credentials for S3 access.
-- `baseDirectory`: Local directory where base files will be generated.
-- `minSize` and `maxSize`: Minimum and maximum size of generated files (in bytes).
-- `totalFiles`: Total number of files to replicate and upload.
-- `maxConcurrentUploads`: Maximum number of simultaneous uploads.
-- `endpointURLs`: List of S3 endpoint URLs.
-- `benchmarkDurationSeconds`: Duration (in seconds) for benchmarking operations.
+- **`bucketName`**: *(string)*
+
+  The name of the S3 bucket where the files will be stored. Ensure the bucket already exists and your AWS credentials have the necessary permissions to access it.
+
+- **`s3Folder`**: *(string)*
+
+  The base folder (prefix) within the S3 bucket where files will be uploaded. This allows you to organize your files within the bucket.
+
+- **`accessKey`** and **`secretKey`**: *(string)*
+
+  Your AWS access key ID and secret access key. These credentials should have permissions to perform S3 operations (PUT, GET, HEAD, DELETE) on the specified bucket.
+
+- **`baseDirectory`**: *(string)*
+
+  The local directory where base files will be generated and stored. If the directory doesn't exist, it will be created. This directory will also contain replicated files organized into subfolders.
+
+- **`minSize`** and **`maxSize`**: *(int)*
+
+  The minimum and maximum size (in bytes) for the randomly generated base files. Each base file will have a random size within this range.
+
+- **`maxFilesPerFolder`**: *(int)*
+
+  The maximum number of files to store in each subfolder within the `baseDirectory`. This helps in organizing files and avoiding too many files in a single directory.
+
+- **`baseFileCount`**: *(int)*
+
+  The number of base files to generate. These files will be used as the source for replication.
+
+- **`totalFiles`**: *(int)*
+
+  The total number of files to replicate and upload to S3. The program will replicate the base files to reach this total count.
+
+- **`maxConcurrentUploads`**: *(int)*
+
+  The maximum number of concurrent uploads to S3. Increasing this number can improve upload throughput but may increase resource usage.
+
+- **`maxIdleConns`** and **`maxIdleConnsPerHost`**: *(int)*
+
+  These settings configure the HTTP client's connection pooling. `maxIdleConns` sets the maximum total idle (keep-alive) connections across all hosts, and `maxIdleConnsPerHost` sets the maximum idle connections per host.
+
+- **`httpTimeout`**: *(int)*
+
+  The timeout (in seconds) for HTTP requests made by the S3 client. Adjust this if you experience timeouts due to network latency.
+
+- **`maxRetries`**: *(int)*
+
+  The maximum number of retry attempts for failed S3 upload operations. Retries use exponential backoff.
+
+- **`endpointURLs`**: *(array of strings)*
+
+  A list of S3 endpoint URLs to use. This allows you to specify custom endpoints, such as for S3-compatible storage services. The program will round-robin requests across these endpoints.
+
+- **`maxConcurrentReplicas`**: *(int)*
+
+  The maximum number of concurrent file replication operations. Adjusting this can affect the speed of local file replication.
+
+- **`pauseDurationSeconds`**: *(int)*
+
+  The duration (in seconds) to pause between uploads of subfolders. This can be useful to throttle the upload rate or to introduce delays between batches.
+
+- **`maxLocalFiles`**: *(int)*
+
+  The maximum number of local replicated files to create and reuse during uploads. This helps limit disk space usage by reusing the same set of files for multiple uploads.
+
+- **`maxBenchmarkThreads`**: *(int)*
+
+  The maximum number of concurrent threads to use during benchmarking operations. This controls the level of concurrency for GET, HEAD, and DELETE operations.
+
+- **`benchmarkDurationSeconds`**: *(int)*
+
+  The duration (in seconds) for which each benchmarking phase will run. This defines how long the program will perform GET, HEAD, and DELETE operations.
+
+### Example Folder Structure
+
+After running the program, the local `baseDirectory` and the S3 bucket will have the following folder structures:
+
+#### Local `baseDirectory` Structure:
+
+```
+./base_files/
+├── file_base_0.txt
+├── file_base_1.txt
+├── file_base_2.txt
+├── ...
+├── folder_1/
+│   ├── file_0.txt
+│   ├── file_1.txt
+│   ├── ...
+├── folder_2/
+│   ├── file_1000.txt
+│   ├── file_1001.txt
+│   ├── ...
+├── ...
+```
+
+- **`file_base_X.txt`**: Base files with random content.
+- **`folder_X/`**: Subfolders containing replicated files based on the base files.
+
+#### S3 Bucket Structure:
+
+Assuming `s3Folder` is set to `"your-s3-base-folder"` and `bucketName` is `"your-bucket-name"`, the S3 structure will be:
+
+```
+s3://your-bucket-name/your-s3-base-folder/
+└── your-bucket-name_DDMMYYYYHHMMSS_100/
+    ├── folder_1/
+    │   ├── file_0.txt
+    │   ├── file_1.txt
+    │   ├── ...
+    ├── folder_2/
+    │   ├── file_1000.txt
+    │   ├── file_1001.txt
+    │   ├── ...
+    ├── ...
+```
+
+- **`your-bucket-name_DDMMYYYYHHMMSS_100/`**: A subfolder named with a combination of the bucket name, the current date and time (in `DDMMYYYYHHMMSS` format), and the number of local files (`maxLocalFiles`).
+- **`folder_X/`**: Subfolders containing the uploaded files, mirroring the local folder structure.
+
+This naming convention helps in organizing uploads and keeping track of when and how many files were uploaded.
 
 ## Usage
 
@@ -365,3 +299,7 @@ Contributions are welcome! Feel free to open issues or pull requests in the repo
 ---
 
 **Note**: Make sure to update the `LICENSE` file with the appropriate license for your project.
+
+---
+
+If you have any further questions or need additional assistance, please let me know!
