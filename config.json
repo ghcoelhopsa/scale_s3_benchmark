@@ -1,0 +1,23 @@
+{
+    "bucketName": "your-bucket-name",
+    "s3Folder": "your-s3-base-folder",
+    "accessKey": "your-access-key",
+    "secretKey": "your-secret-key",
+    "baseDirectory": "./base_files",
+    "minSize": 1024,
+    "maxSize": 2048,
+    "maxFilesPerFolder": 1000,
+    "baseFileCount": 10,
+    "totalFiles": 100,
+    "maxConcurrentUploads": 10,
+    "maxIdleConns": 100,
+    "maxIdleConnsPerHost": 100,
+    "httpTimeout": 30,
+    "maxRetries": 3,
+    "endpointURLs": ["https://your-s3-url"],
+    "maxConcurrentReplicas": 5,
+    "pauseDurationSeconds": 60,
+    "maxLocalFiles": 100,
+    "maxBenchmarkThreads": 10,
+    "benchmarkDurationSeconds": 60
+}
