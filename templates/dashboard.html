@@ -1,0 +1,53 @@
+<!-- templates/dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload Monitoring Dashboard</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@1.0.0"></script> <!-- Adaptador de data -->
+</head>
+<body>
+    <h1>Upload Monitoring for S3</h1>
+
+    <div>
+        <h2>General Statistics</h2>
+        <p>Total Uploads: <span id="total-uploads">0</span></p>
+        <p>Successes: <span id="successes">0</span></p>
+        <p>Failures: <span id="failures">0</span></p>
+    </div>
+
+    <div>
+        <h2>Uploads Over Time</h2>
+        <div class="chart-container">
+            <canvas id="uploadsChart"></canvas>
+        </div>
+    </div>
+
+    <div>
+        <h2>Uploads Rate</h2>
+        <p>Uploads por Segundo: <span id="uploads-per-second">0</span></p>
+        <p>Uploads por Hora: <span id="uploads-per-hour">0</span></p>
+    </div>
+
+    <!-- Opcional: Gráficos adicionais para visualização das taxas -->
+    <div>
+        <h2>Gráfico de Uploads por Segundo</h2>
+        <div class="chart-container">
+            <canvas id="uploadsPerSecondChart"></canvas>
+        </div>
+    </div>
+
+    <div>
+        <h2>Gráfico de Uploads por Hora</h2>
+        <div class="chart-container">
+            <canvas id="uploadsPerHourChart"></canvas>
+        </div>
+    </div>
+
+    <script src="/static/js/charts.js"></script>
+</body>
+</html>
+

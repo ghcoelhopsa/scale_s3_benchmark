@@ -1,0 +1,32 @@
+/* static/css/styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+h1, h2 {
+    color: #333;
+}
+
+div {
+    margin-bottom: 30px;
+}
+
+.chart-container {
+    position: relative;
+    width: 100%;
+    height: 400px; /* Ajuste a altura conforme necessário */
+}
+
+/* Estilos para as novas seções de taxas */
+#uploads-rate {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#uploads-rate p {
+    font-size: 1.2em;
+}
+

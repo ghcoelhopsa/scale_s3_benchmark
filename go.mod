@@ -1,10 +1,10 @@
 module scale_s3_benchmark
 
-go 1.20
+go 1.22
+
+require github.com/aws/aws-sdk-go v1.55.5
 
 require (
-        github.com/aws/aws-sdk-go v1.44.0
-        golang.org/x/sys v0.11.0
+	github.com/gorilla/websocket v1.5.3 // indirect
+	github.com/jmespath/go-jmespath v0.4.0 // indirect
 )
-
-require github.com/jmespath/go-jmespath v0.4.0 // indirect

@@ -1,0 +1,39 @@
+<!-- templates/test_sse.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test SSE</title>
+</head>
+<body>
+    <h1>Test SSE Endpoint</h1>
+    <div id="messages"></div>
+
+    <script>
+        if (!!window.EventSource) {
+            let source = new EventSource('/test-sse');
+
+            source.onopen = function() {
+                console.log("Test SSE connection opened.");
+            };
+
+            source.onmessage = function(event) {
+                console.log("Received Test SSE data:", event.data);
+                let data = JSON.parse(event.data);
+                let messagesDiv = document.getElementById('messages');
+                let p = document.createElement('p');
+                p.textContent = `Message: ${data.message}, Count: ${data.count}`;
+                messagesDiv.appendChild(p);
+            };
+
+            source.onerror = function(err) {
+                console.error("Test EventSource failed:", err);
+                source.close();
+            };
+        } else {
+            console.log("SSE not supported in this browser.");
+        }
+    </script>
+</body>
+</html>
+
