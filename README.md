@@ -62,8 +62,8 @@ The structure of the project is organized to facilitate easy management and exte
 1. **Prerequisites**: Make sure to have Go installed on your system and set up the necessary AWS/S3-compatible credentials.
 2. **Clone the Repository**: Download the code to your local environment.
    ```bash
-   git clone https://github.com/your-username/your-repository.git
-   cd your-repository
+   git clone https://github.com/ghcoelhopsa/scale_s3_benchmark
+   cd scale_s3_benchmark
    ```
 3. **Install Dependencies**
    ```bash
