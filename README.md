@@ -2,6 +2,8 @@
 ## Overview
 This Go-based application is designed to generate and upload large numbers of small files to an IBM Scale S3 Benchmark (nooba) service. It includes functionality for file generation, benchmarking, replication, and upload management. The program is intended for performance testing of S3-compatible storage, particularly when handling numerous small files.
 
+**"The web part with real-time updates is not yet functional. Disabled."**
+
 ## Features
 - **File Generation**: Generates files between 4KB and 8KB in size for testing purposes. File counts can be configured to scale from a thousand to several million files.
 - **S3 Upload**: Uploads generated files to a specified S3 bucket, with support for parallel uploads and configurable concurrency levels.
