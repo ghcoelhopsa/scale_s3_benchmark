@@ -26,7 +26,7 @@ func main() {
 
     // Initialize statistics.
     monitor.InitializeStats()
-    monitor.StartPeriodicReporting("stats_report.csv", time.Minute)
+    monitor.StartPeriodicReporting("plot/stats_report.csv", time.Minute)
     
     // Start the web server for the dashboard.
     //startWebServer()
