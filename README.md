@@ -1,4 +1,5 @@
 # IBM Scale S3 Benchmark (nooba)
+
 ## Overview
 This Go-based application is designed to generate and upload large numbers of small files to an IBM Scale S3 Benchmark (nooba) service. It includes functionality for file generation, benchmarking, replication, and upload management. The program is intended for performance testing of S3-compatible storage, particularly when handling numerous small files.
 
@@ -10,6 +11,7 @@ This Go-based application is designed to generate and upload large numbers of sm
 - **Replication**: Supports replicating files to multiple S3 endpoints.
 - **Benchmarking**: Includes benchmarking capabilities to assess the performance of different operations on the files and S3 storage, such as GET, HEAD, and DELETE.
 - **Final Report**: Generates a detailed report with metrics of the performed operations.
+- **Plot Generation**: Generates visual plots from CSV data to analyze upload performance metrics.
 
 ## Configuration
 The application uses a configuration file, `config.json`, to define all operational parameters. Here are key properties from the configuration file:
@@ -47,6 +49,9 @@ The `config.json` file plays a crucial role in defining how the application will
 - **file_generation.go**: Handles the creation of files for testing.
 - **upload.go**: Manages the upload process for generated files.
 - **s3_client.go**: Contains functions for interacting with the S3-compatible API.
+- **plot/**: Directory containing plotting scripts and generated plots.
+  - **plot.py**: Python script to generate performance plots from CSV data.
+  - **plot_DATA_TOTALARQUIVOS.png**: Generated plot image reflecting upload performance metrics.
 
 The structure of the project is organized to facilitate easy management and extension of functionality. Each major component of the application is separated into its own Go file:
 
@@ -59,23 +64,31 @@ The structure of the project is organized to facilitate easy management and exte
 - **`s3_client.go`**: Provides helper functions for interacting with S3-compatible APIs, such as initiating uploads, handling retries, and more.
 - **`benchmark.go`**: Manages benchmarking tasks to evaluate the performance of S3 operations like GET, HEAD, and DELETE.
 - **`report.go`**: Generates detailed reports summarizing the performance metrics from uploads, replications, and benchmarking operations.
+- **`plot/plot.py`**: Python script dedicated to generating visual plots from CSV data to analyze upload performance.
 
 ## Setup Instructions
-1. **Prerequisites**: Make sure to have Go installed on your system and set up the necessary AWS/S3-compatible credentials.
+1. **Prerequisites**: Ensure you have Go installed on your system and set up the necessary AWS/S3-compatible credentials.
 2. **Clone the Repository**: Download the code to your local environment.
    ```bash
    git clone https://github.com/ghcoelhopsa/scale_s3_benchmark
    cd scale_s3_benchmark
    ```
-3. **Install Dependencies**
+3. **Install Go Dependencies**
    ```bash
    go get github.com/aws/aws-sdk-go
    ```
-4. **Build the Program**
+4. **Set Up the Plotting Environment**
+   - Navigate to the `plot` directory and install Python dependencies.
+     ```bash
+     cd plot
+     pip install -r requirements.txt
+     ```
+5. **Build the Program**
    ```bash
+   cd ..
    go build -o s3-benchmark
    ```
-5. **Configure the Application**: Edit the `config.json` file to set your S3 credentials, bucket name, file size, and concurrency settings.
+6. **Configure the Application**: Edit the `config.json` file to set your S3 credentials, bucket name, file size, and concurrency settings.
 
 ## Usage
 - **Prepare the Configuration File**: Modify `config.json` to adjust the parameters as needed. You can change the number of files, file sizes, bucket names, and concurrency levels.
@@ -84,6 +97,19 @@ The structure of the project is organized to facilitate easy management and exte
   ./s3-benchmark
   ```
   This will start generating files, uploading them to the specified S3 bucket, and running any specified benchmarks.
+- **Generate Performance Plots**:
+  - After the upload and benchmarking processes are complete, navigate to the `plot` directory.
+    ```bash
+    cd plot
+    ```
+  - Run the plotting script, which will read the generated CSV file and create a visual plot.
+    ```bash
+    python plot.py
+    ```
+  - The plot image will be saved as `plot_DATA_TOTALARQUIVOS.png` in the `plot` directory, where `DATA` and `TOTALARQUIVOS` are dynamically replaced based on the latest data.
+  
+  ![Upload Performance Plot](plot/plot_DATA_TOTALARQUIVOS.png)
+  
 - **Monitor the Output**: The program will display information about the progress of operations, including file generation, upload, replication, and benchmarking.
 
 ## Example Output
@@ -132,7 +158,28 @@ Overall Benchmark Summary:
 Total Operations: 10100
 Total Errors: 0
 Benchmarking Duration: 1m0s
-====================
+=====================
+```
+
+## Plot Generation
+The application includes a Python-based plotting tool to visualize upload performance metrics.
+
+- **Plot Script**: Located in the `plot` directory as `plot.py`.
+- **CSV Data**: The upload process generates a CSV file containing performance data, which is saved within the `plot` directory.
+- **Generated Plot**: The script processes the CSV data and generates a plot saved as `plot_DATA_TOTALARQUIVOS.png`, where `DATA` represents the date and `TOTALARQUIVOS` represents the total number of uploaded files.
+
+### **Requirements**
+Ensure the following Python packages are installed to run the plotting script:
+
+```plaintext
+pandas
+matplotlib
+```
+
+These can be installed using the provided `requirements.txt` file:
+
+```bash
+pip install -r requirements.txt
 ```
 
 ## License
